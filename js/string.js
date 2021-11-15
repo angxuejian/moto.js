@@ -8,6 +8,11 @@ import { isTypeOf } from '../util/index'
  * 示例: toUpperCaseH(moScrollbar) => mo-scrollbar
  */
 export const toUpperCaseH = (str) => {
+
+  if (!str) {
+    throw new TypeError(`"str" cannot be empty`)
+  }
+
   if (!isTypeOf(str, 'string')) {
     throw new TypeError(`${str} is not a string`)
   }

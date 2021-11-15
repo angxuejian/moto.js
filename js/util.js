@@ -8,6 +8,14 @@
  * 'name' 的类型是否为String类型
  */
 export const isTypeOf = (value, type) => {
+
+  if (!value) {
+    throw new TypeError(`"value" cannot be empty`)
+  }
+  if (!type) {
+    throw new TypeError(`"type" cannot be empty`)
+  }
+
   if (typeof type !== 'string') {
     throw new TypeError(`${type} is not a string`)
   }
