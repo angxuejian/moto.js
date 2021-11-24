@@ -22,6 +22,6 @@ const yearWeekNumber = moate.getWeekNumber()
 const monthWeekNumber = moate.getWeekNumber(1)
 
 console.log(`2021年的第${yearWeekNumber}周`) // 2021年的第50周
-console.log(`2021年12月的第${yearWeekNumber}周`) // 2021年12月的第3周
+console.log(`2021年12月的第${monthWeekNumber}周`) // 2021年12月的第3周
 
 ```
