@@ -12,19 +12,30 @@ class Moate {
   }
 
   /**
-   * 当前日期是 今年的第几周
-   * @returns weekNumber 年 周数
+   * 当前日期是 今(年 or 月)的第几周
+   * @param {number} type (0 or 1) 0：年； 1：月
+   * @param {number} base (0 or 1) 0：以周日计算本月周数；1：以周一计算本月周数
+   * @returns weekNumber (年 or 月) 周数
    */
-  getWeekNumber() {
+  getWeekNumber(type = 0, base = 0) {
+    if (type !== 0 && type !== 1) {
+      throw new Error('select only 0 or 1')
+    }
+
     const start = new Date(this.d)
     const end   = new Date(this.d)
+    let baseNum = 0
 
-    start.setMonth(0)
-    start.setDate(1)
+    if (!type) {
+      start.setMonth(0)
+      start.setDate(1)
+    } else {
+      start.setDate(1)
+      baseNum = base ? 1 : 2
+    }
 
-    const days = (end - start) / (24 * 60 * 60 * 1000)
+    const days = ((end - start) || 1) / (24 * 60 * 60 * 1000) + baseNum
     const weekNumber = Math.ceil(days / 7)
-
     return weekNumber
   }
 
@@ -41,11 +52,21 @@ class Moate {
     const min = base ? 1 : 0
     const max = base ? 7 : 6
 
-    const startTime = `${this.year}-${this.mmonth}-${this.date + min - this.weekDay}`
-    const endTime   = `${this.year}-${this.mmonth}-${this.date + max - this.weekDay}`
+    const start = new Date(this.d)
+    const end   = new Date(this.d)
+    start.setDate(this.date + min - this.weekDay)
+    end.setDate(this.date + max - this.weekDay)
+
+    const startTime = this.getFormat(start)
+    const endTime   = this.getFormat(end)
 
     return { startTime, endTime }
   }
-}
 
-module.exports = Moate
+  getFormat(d) {
+    const yy = d.getFullYear()
+    const mm = d.getMonth() + 1
+    const dd = d.getDate()
+    return [yy, mm, dd].join('-')
+  }
+}

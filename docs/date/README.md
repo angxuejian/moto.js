@@ -16,5 +16,5 @@ d   | date | 无     | 是  | 可以被 new Date对象解析的时间
 ### Moate对象方法
 方法 | 说明
 ---  | ---
-[getWeekNumber](./getWeekNumber.md) | 以年计算当前为第几周
+[getWeekNumber](./getWeekNumber.md) | 以(年or月)计算当前为第几周
 [getWeekNumberTime](./getWeekNumberTime.md) | 获取周的开始时间和结束时间

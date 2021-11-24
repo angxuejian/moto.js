@@ -11,9 +11,10 @@
 <body>
   
   <script>
-    const moate = new Moate('2021-11-15')
+    const moate = new Moate('2021-12-15')
 
-    console.log(moate.getWeekNumber())
+    console.log('年的第', moate.getWeekNumber(), '周')
+    console.log('月的第', moate.getWeekNumber(1), '周')
     console.log(moate.getWeekNumberTime())
     console.log(moate.getWeekNumberTime(1))
 
