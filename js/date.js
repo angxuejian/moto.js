@@ -42,7 +42,7 @@ class Moate {
   /**
    * 获取一周的开始时间和结束时间
    * @param {number} base (0 or 1) 0：周日开始；1：周一开始
-   * @returns
+   * @returns { startTime, endTime } 开始时间 和 结束时间
    */
   getWeekNumberTime(base = 0) {
     if (base !== 0 && base !== 1) {
@@ -63,12 +63,37 @@ class Moate {
     return { startTime, endTime }
   }
 
+  /**
+   * 获取相邻月份
+   * @returns { lastMonth, nextMonth } 上月月份 和 下月月份
+   */
+  getAdjacentMonths() {
+    const last = new Date(this.d)
+    const next = new Date(this.d)
+
+    last.setMonth(last.getMonth() - 1)
+    last.setDate(1)
+
+    next.setMonth(next.getMonth() + 1)
+    next.setDate(1)
+
+    return {
+      lastMonth: this.getFormat(last),
+      nextMonth: this.getFormat(next)
+    }
+  }
+
   getFormat(d) {
     const yy = d.getFullYear()
     const mm = d.getMonth() + 1
     const dd = d.getDate()
-    return [yy, mm, dd].join('-')
+    return [yy, mm, dd].map(this.padStart).join('-')
+  }
+
+  padStart(n) {
+    n = n.toString()
+    return n.padStart(2, '0')
   }
 }
 
-export default Moate
+// export default Moate

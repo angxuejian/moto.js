@@ -5,19 +5,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moto Js</title>
+
+  <script src="js/date.js"></script>
 </head>
 <body>
   
   <script type="module">
-    import Calendar from './js/calendar/main.js'
-    import Moate from './js/date.js'
+    // import Calendar from './js/calendar/main.js'
+    // import Moate from './js/date.js'
 
-    // const moate = new Moate('2021-12-15')
+    const moate = new Moate('2021-11-15')
 
     // console.log('年的第', moate.getWeekNumber(), '周')
     // console.log('月的第', moate.getWeekNumber(1), '周')
     // console.log(moate.getWeekNumberTime())
     // console.log(moate.getWeekNumberTime(1))
+    console.log(moate.getAdjacentMonths())
 
     // console.log(Calendar)
     // const calendar = new Calendar()
