@@ -70,3 +70,5 @@ class Moate {
     return [yy, mm, dd].join('-')
   }
 }
+
+export default Moate
