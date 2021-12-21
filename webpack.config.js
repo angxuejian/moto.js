@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: ['./src/index.js'],
@@ -9,6 +10,22 @@ module.exports = {
       title: 'Moto.js - sdk',
     })
   ],
+  module: {
+    rules: [
+      { // 将es6转为es5语法
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: { presets: ['@babel/preset-env'] }
+        }
+      }
+    ]
+  },
+
+  optimization: {
+    minimizer: [new UglifyJsPlugin()]
+  },
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
