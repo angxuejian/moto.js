@@ -16,7 +16,8 @@ true/false  | boolean | 类型是否一致
 
 ## 示例代码
 ```javascript
-const type = isTypeOf('name', 'string')
+const value = 'yuhua'
+const type = isTypeOf(value, 'string')
 
 console.log(type) // true
 ```

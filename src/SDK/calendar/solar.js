@@ -6,7 +6,6 @@ import {
 
 class Solar {
   constructor() {
-
   }
 
   /**
@@ -233,12 +232,8 @@ class Solar {
       m = 1
     }
 
-    return {
-      y,
-      m
-    }
+    return { y, m }
   }
-
 }
 
 export default Solar

@@ -3,11 +3,9 @@ JavaScript - SDK
 
 ## 导航
 
-- [公共方法](docs/util/README.md)
-
-- [日期方法](docs/date/README.md)
-
-- [字符串方法](docs/string/README.md)
+- [类型方法](docs/types/README.md)
+- [日期方法](docs/moate/README.md)
+- [格式化字符串方法](docs/formatString/README.md)
 
 
 

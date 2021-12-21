@@ -1,8 +1,7 @@
 class Moate {
-  constructor(d) {
-    if (!new Date(d).getTime()) {
-      throw new Error('Invalid Date')
-    }
+  constructor(d = new Date()) {
+    if (!new Date(d).getTime()) throw new Error('Invalid Date')
+    
     this.d   = new Date(d)
     this.year    = this.d.getFullYear()
     this.month   = this.d.getMonth()
@@ -18,10 +17,8 @@ class Moate {
    * @returns weekNumber (年 or 月) 周数
    */
   getWeekNumber(type = 0, base = 0) {
-    if (type !== 0 && type !== 1) {
-      throw new Error('select only 0 or 1')
-    }
-
+    if (type !== 0 && type !== 1) throw new Error('select only 0 or 1')
+    
     const start = new Date(this.d)
     const end   = new Date(this.d)
     let baseNum = 0
@@ -45,10 +42,8 @@ class Moate {
    * @returns { startTime, endTime } 开始时间 和 结束时间
    */
   getWeekNumberTime(base = 0) {
-    if (base !== 0 && base !== 1) {
-      throw new Error('select only 0 or 1')
-    }
-
+    if (base !== 0 && base !== 1) throw new Error('select only 0 or 1')
+    
     const min = base ? 1 : 0
     const max = base ? 7 : 6
 
@@ -96,4 +91,4 @@ class Moate {
   }
 }
 
-// export default Moate
+export default Moate
