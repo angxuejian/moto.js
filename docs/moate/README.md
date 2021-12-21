@@ -11,7 +11,7 @@ const moate = new Moate('2021-11-15')
 ### Moate对象属性
 参数   | 类型   | 默认值 | 必填| 说明
 ---    | ---   | ---    | --- | ---
-d   | date | 无     | 是  | 可以被 new Date对象解析的时间
+d   | date | 今天     | 否  | 可以被 new Date对象解析的时间
 
 ### Moate对象方法
 方法 | 说明
