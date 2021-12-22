@@ -1,11 +1,13 @@
 import {
-  LANR_ARR,
-  BASIS, LUNAR_MONTH, LUNAR_DAY, SHENGXIAO, TIANGAN,
-  DIZHI, SOLAR_TERMS_MIN, SOLAR_TERMS_CN
+  LANR_ARR,BASIS,LUNAR_MONTH,LUNAR_DAY,SHENGXIAO,TIANGAN,DIZHI,
+  SOLAR_TERMS_MIN,SOLAR_TERMS_CN,LUNAR_FESTIVAL,SOLAR_FESTIVAL
 } from './config'
+const d = new Date()
 
 class Solar {
   constructor() {
+    this.SOLAR_TERMS = [] // 24节气 对应时间表
+    this.TIMESTAMP = new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`).getTime()
   }
 
   /**
@@ -13,9 +15,11 @@ class Solar {
    * @param {number} sy 阳历年
    * @param {number} sm 阳历月 0-11
    * @param {number} sd 阳历日
-   * @param {boolear} done 是否 return 年月日
    */
-  solar_to_lunar = function (sy, sm, sd, done) {
+  solar_to_lunar = function (sy, sm, sd) {
+
+    this.SOLAR_TERMS = this.getSolarTerms(sy)
+
     sm -= 1
     let ly, lm, ld;
     let day_diff = (Date.UTC(sy, sm, sd) - Date.UTC(1949, 0, 29)) / (24 * 60 * 60 * 1000) + 1;
@@ -50,8 +54,73 @@ class Solar {
         break
       }
     }
-    return this.clear_day(ly, lm, ld, done)
+    return this.clear_day(ly, lm, ld, {
+      sy,
+      sm: sm + 1,
+      sd
+    })
   }
+
+  /**
+   * 清洗阴历日期 将数字日期转为汉字
+   * @param {number}          ly 阴历年
+   * @param {number | string} lm 阴历月 1-12 | 1-13
+   * @param {number}          ld 阴历日
+   * @param {object}          sd 阳历年月日
+   */
+  clear_day = function (ly, lm, ld, sd) {
+    let cy, cm, cd;
+    ld = ld.toString()
+    // if (ld == 1) {
+    //   cd = `${LUNAR_DAY[10]}${LUNAR_DAY[ld - 1]}`
+    // } else 
+    if (ld >= 1 && ld <= 10) {
+      cd = `${LUNAR_DAY[10]}${LUNAR_DAY[ld - 1]}`
+
+    } else if (ld >= 11 && ld <= 19) {
+      cd = `${LUNAR_DAY[9]}${LUNAR_DAY[ld[1] - 1]}`
+
+    } else if (ld == 20 || ld == 30) {
+      cd = `${LUNAR_DAY[ld[0] - 1]}${LUNAR_DAY[9]}`
+
+    } else if (ld >= 21 && ld <= 29) {
+      cd = `${LUNAR_DAY[11]}${LUNAR_DAY[ld[1] - 1]}`
+    }
+
+    cm = this.clear_cn_month(lm)
+
+    let tg, dz, sx;
+    tg = TIANGAN[ly % 10]
+    dz = DIZHI[ly % 12]
+    sx = SHENGXIAO[ly % 12]
+    cy = `${tg}${dz}${sx}年`
+
+    let m = lm
+    if (/闰/g.test(lm)) m = lm.split('闰')[1]
+
+    const fes = [this.padStart(m), this.padStart(ld)]
+    const s_fes = `${this.padStart(sd.sm)}${this.padStart(sd.sd)}`
+    const l_fes = fes.join(' ').replace(/\s*/ig, '')
+
+    const today = [
+      LUNAR_FESTIVAL[l_fes], // 阴历节日
+      SOLAR_FESTIVAL[s_fes], // 阳历节日
+      this.SOLAR_TERMS[s_fes], // 节气
+    ].filter(item => item && item)
+
+    return {
+      date: [sd.sy, sd.sm, sd.sd].join('-'),
+      year: sd.sy,
+      month: sd.sm,
+      day: sd.sd,
+      date_lunar: `${cy} ${cm}${cd}`,
+      year_lunar: cy,
+      month_lunar: cm,
+      day_lunar: cd,
+      festival: [...today]
+    }
+  }
+
 
   /**
    * 计算 阴历每一年的天数
@@ -87,7 +156,6 @@ class Solar {
     return monthArr
   }
 
-
   /**
    * 阴历 确认是否闰月
    * @param {string} ly 2进制阴历年
@@ -111,51 +179,6 @@ class Solar {
    */
   clear_binary = function (ly) {
     return ly.toString(2).padStart(16, 0)
-  }
-
-  /**
-   * 清洗阴历日期 将数字日期转为汉字
-   * @param {number}          ly 阴历年
-   * @param {number | string} lm 阴历月 1-12 | 1-13
-   * @param {number}          ld 阴历日
-   * @param {boolear}         done 是否return 年月日
-   */
-  clear_day = function (ly, lm, ld, done) {
-    let cy, cm, cd;
-    ld = ld.toString()
-    if (ld == 1) {
-      cd = this.clear_cn_month(lm)
-
-    } else if (ld >= 2 && ld <= 10) {
-      cd = `${LUNAR_DAY[10]}${LUNAR_DAY[ld - 1]}`
-
-    } else if (ld >= 11 && ld <= 19) {
-      cd = `${LUNAR_DAY[9]}${LUNAR_DAY[ld[1] - 1]}`
-
-    } else if (ld == 20 || ld == 30) {
-      cd = `${LUNAR_DAY[ld[0] - 1]}${LUNAR_DAY[9]}`
-
-    } else if (ld >= 21 && ld <= 29) {
-      cd = `${LUNAR_DAY[11]}${LUNAR_DAY[ld[1] - 1]}`
-    }
-
-    cm = this.clear_cn_month(lm)
-
-    let tg, dz, sx;
-    tg = TIANGAN[ly % 10]
-    dz = DIZHI[ly % 12]
-    sx = SHENGXIAO[ly % 12]
-    cy = `${tg}${dz}${sx}年`
-
-    let m = lm
-    if (/闰/g.test(lm)) m = lm.split('闰')[1]
-
-
-    if (!done) return {
-      fes: [this.padStart(m), this.padStart(ld)],
-      day: cd
-    }
-    else return `${cy} ${cm}${cd}`
   }
 
   /**
@@ -218,21 +241,6 @@ class Solar {
   padStart = function (n) {
     n = n.toString()
     return n.padStart(2, 0)
-  }
-
-  /**
-   * 超过 12月， 年 + 1
-   * @param {number} y 阳历年份 
-   * @param {number} m 阳历月份（已加 1 ）
-   * @returns { y, m }
-   */
-  clearMonth = function (y, m) {
-    if (m > 12) {
-      y += 1
-      m = 1
-    }
-
-    return { y, m }
   }
 }
 
