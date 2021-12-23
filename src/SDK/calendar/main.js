@@ -11,16 +11,22 @@ class Calendar extends Solar {
     this.MONTH  = this.d.getMonth()
     this.MMONTH = this.d.getMonth() + 1
     this.DAY    = this.d.getDate()
-    // this.weekDay = this.d.getDay()
     this.MONTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] // 阳历月份
   }
 
-  getMonth() {
+  /**
+   * 获取一月的日历信息
+   * @param {number} base (0 or 1) 0：周日开始；1：周一开始
+   * @returns {array} 月日历信息
+   */
+  getMonth(base = 0) {
+    if (base !== 0 && base !== 1) throw new Error('select only 0 or 1')
+
     const list = []
     if (this.MONTH === 1) this.leapMonth(this.YEAR)
 
     // 上月日期
-    const monday = new Date(`${this.YEAR}-${this.MMONTH}-01`).getDay()
+    const monday = new Date(`${this.YEAR}-${this.MMONTH}-01`).getDay() - base
     const SM = this.MONTH === 0 ? 11 : this.MONTH - 1
     const sLength = this.MONTHS[SM] - monday
     for (let i = sLength; i < this.MONTHS[SM]; i++) {
@@ -35,7 +41,7 @@ class Calendar extends Solar {
     for (let i = 0; i < this.MONTHS[this.MONTH]; i++) {
       list.push(this.formatDate({
         y: this.YEAR,
-        m: this.MONTH + 1,
+        m: this.MMONTH,
         d: i + 1,
       }))
     }
@@ -52,12 +58,18 @@ class Calendar extends Solar {
     return list
   }
 
+   /**
+   * 获取一周的日历信息
+   * @param {number} base (0 or 1) 0：周日开始；1：周一开始
+   * @returns {array} 周日历信息
+   */
+  getWeek(base = 0) {
+    if (base !== 0 && base !== 1) throw new Error('select only 0 or 1')
 
-  getWeek() {
     const list = []
     const now = [this.YEAR, this.MMONTH, this.DAY].join('-')
     const moate = new Moate(now)
-    const frist = moate.getWeekNumberTime().startTime
+    const frist = moate.getWeekNumberTime(base).startTime
 
     // for (let i = 0; i < (row * 7); i++) {
     //   list.push({
@@ -73,6 +85,18 @@ class Calendar extends Solar {
     }
 
     return list
+  }
+
+  /**
+   * 获取一日的日历信息
+   * @returns 当天的日历信息
+   */
+  getDay() {
+    return this.formatDate({
+      y: this.YEAR,
+      m: this.MMONTH,
+      d: this.DAY,
+    })
   }
 
   /**
