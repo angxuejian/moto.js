@@ -2,8 +2,9 @@ import Calendar from './SDK/calendar/main'
 import Moate from './SDK/moate'
 import * as formatString from './SDK/formatString'
 import * as types from './SDK/types'
+import * as color from './SDK/color'
 
-const _FUNCTIONS = { ...formatString, ...types }
+const _FUNCTIONS = { ...formatString, ...types, ...color }
 
 for (const key in _FUNCTIONS) window[key] = _FUNCTIONS[key]
 window.Moate = Moate
@@ -23,3 +24,8 @@ console.log('本月的日历周一开始:', calen.getMonth(1))
 console.log('本周的日历周日开始:', calen.getWeek())
 console.log('本周的日历周一开始:', calen.getWeek(1))
 console.log('本日的日历信息:', calen.getDay())
+
+console.log('rgb转hsv:', rgbToHsv(127, 207, 112))
+console.log('hsv转rgb:', hsvToRgb(111, 46, 81))
+console.log('rgb转hex:', rgbToHsv(127, 207, 112))
+console.log('hex转rgb:', hexToRgb('#7ECF70'))
