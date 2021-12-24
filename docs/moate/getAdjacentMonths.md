@@ -1,4 +1,4 @@
-# getAdjacentMonths(base)
+# getAdjacentMonths()
 获取相邻月份
 
 

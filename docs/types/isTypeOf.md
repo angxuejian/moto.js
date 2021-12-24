@@ -10,9 +10,9 @@ type   | string | 无     | 是  | 期望类型
 
 
 ## 返回值
-属性   | 类型   |  说明
----    | ---   | ---
-true/false  | boolean | 类型是否一致
+类型   |  说明
+---   | ---
+boolean | 类型是否一致
 
 ## 示例代码
 ```javascript
