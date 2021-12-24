@@ -34,6 +34,7 @@ class Calendar extends Solar {
         y: this.YEAR,
         m: this.MONTH,
         d: i + 1,
+        t: 'last'
       }))
     }
 
@@ -43,6 +44,7 @@ class Calendar extends Solar {
         y: this.YEAR,
         m: this.MMONTH,
         d: i + 1,
+        t: 'current'
       }))
     }
 
@@ -53,6 +55,7 @@ class Calendar extends Solar {
         y: this.YEAR,
         m: this.MONTH + 2,
         d: i + 1,
+        t: 'next'
       }))
     }
     return list
@@ -70,12 +73,6 @@ class Calendar extends Solar {
     const now = [this.YEAR, this.MMONTH, this.DAY].join('-')
     const moate = new Moate(now)
     const frist = moate.getWeekNumberTime(base).startTime
-
-    // for (let i = 0; i < (row * 7); i++) {
-    //   list.push({
-    //     solar: 0
-    //   })
-    // }
 
     for (let i = 0; i < 7; i++) {
       const d = new Date(frist)
@@ -110,10 +107,12 @@ class Calendar extends Solar {
     const { y, m } = this.cleanMonth(params.y, params.m)
     const { d } = params
     const info = this.solar_to_lunar(y, m, d)
-    return {
+    const data = {
       ...info,
       timestamp: new Date([y, m, d].join('-')).getTime(),
     }
+    if (params.t) data.type = params.t
+    return data
   }
 
   /**
@@ -140,10 +139,7 @@ class Calendar extends Solar {
       m = 12
     }
 
-    return {
-      y,
-      m
-    }
+    return { y, m }
   }
 
   getFormat(d) {
