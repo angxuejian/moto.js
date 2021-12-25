@@ -1,14 +1,19 @@
+import { isTypeOf } from "./types";
 
+
+const init = (t) => {
+  if (!isTypeOf(t, 'number')) throw new TypeError(`"${t}" type error, "${t}" should be a number type`)
+}
 
 /**
  * hsv 转 rgb
  * @param {number} h 色调 0 - 360
  * @param {number} s 饱和度 0 - 100
  * @param {number} v 明度 0 - 100
- * @param {number} a 透明度 0 - 1
  */
-export function hsvToRgb(h, s, v, a = 1) {
-
+export function hsvToRgb(h, s, v) {
+  [h,s,v].map(init)
+  
   // 将 坐标值 转换为 百分比 0% - 100%
   s = s / 100
   v = v / 100
@@ -29,12 +34,7 @@ export function hsvToRgb(h, s, v, a = 1) {
   ]
 
   const rgb = list[i % 6].map(hr_round) // i mod 6: 是因为有六种可能性
-  const data = {
-    rgb : `rgb(${rgb.join()})`,
-    hex : rgbToHex(rgb),
-    rgba: `rgba(${rgb.join()}, ${a})`
-  }
-  return data 
+  return `rgb(${rgb.join()})` 
 }
 /**
  * rgb 转 hsv
@@ -43,7 +43,7 @@ export function hsvToRgb(h, s, v, a = 1) {
  * @param {number} b blue 0 - 255
  */
 export function rgbToHsv(r, g, b) {
-
+  [r, g, b].map(init)
   const [red, green, blue] = [r, g, b].map(rh_range)
 
   let h = 0,
@@ -84,23 +84,27 @@ export function rgbToHsv(r, g, b) {
 
 /**
  * rgb 转 hex
- * @param {array} rgb [0-255,0-255,0-255]
+ * @param {number} r red 0 - 255
+ * @param {number} g green 0 - 255
+ * @param {number} b blue 0 - 255
  */
-export function rgbToHex (rgb) {
-  return `#${rgb.map(rh_string).join(' ').replace(/\s*/g, '')}`
+export function rgbToHex (r, g, b) {
+  [r, g, b].map(init)
+  return `#${[r, g, b].map(rh_string).join(' ').replace(/\s*/g, '')}`
 }
 /**
  * hex 转 rgb
- * @param {array} hex [0-9a-fA-F,0-9a-fA-F,0-9a-fA-F]
+ * @param {string} hex #7ECF70
  */
 export function hexToRgb (hex) {
   hex = hex.replace(/\s*/g, "")
 
-  if (!/^#[0-9a-fA-F]{6}/g.test(hex)) return ' '
+  if (!/^#[0-9a-fA-F]{6}/g.test(hex)) return ''
   const h = hex.substring(1, 3),
         e = hex.substring(3, 5),
         x = hex.substring(5, 7);
-  return [h, e, x].map(hr_number)
+  const rgb = [h, e, x].map(hr_number)
+  return `rgb(${rgb.join()})`
 }
 
 

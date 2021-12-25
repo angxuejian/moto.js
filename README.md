@@ -6,6 +6,7 @@ JavaScript - SDK
 - [类型方法](docs/types/README.md)
 - [日期方法](docs/moate/README.md)
 - [日历方法](docs/calendar/README.md)
+- [颜色转换方法](docs/color/README.md)
 
 - [格式化字符串方法](docs/formatString/README.md)
 
