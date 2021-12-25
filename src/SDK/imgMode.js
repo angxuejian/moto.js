@@ -1,12 +1,20 @@
+import { isTypeOf } from "./types";
 
+
+const init = (t) => {
+  if (!isTypeOf(t, 'number')) throw new TypeError(`"${t}" type error, "${t}" should be a number type`)
+}
 
 
 class ImgMode {
   constructor(width, height, styleW, styleH) {
+    [width, height, styleW, styleH].map(init)
+
     this.width  = width  // 图片自身宽度
-    this.height = height // 
-    this.styleH = styleH // 盒子样式高度
-    this.styleW = styleW // 盒子样式宽度
+    this.height = height // 图片自身高度
+
+    this.styleW = styleW // 图片样式宽度
+    this.styleH = styleH // 图片样式高度
   }
 
   /**
@@ -72,7 +80,7 @@ class ImgMode {
    * heightFix
    * @returns {object} 标签内联样式宽度
    */
-  getheightFix() {
+  getHeightFix() {
     const { width, height, styleH } = this
     let scale = styleH / height
     let w = width * scale
@@ -190,7 +198,7 @@ class ImgMode {
 
   // bottom right
   getBottomRight() {
-    const { width, height, styleH, styleW  } = this.data
+    const { width, height, styleH, styleW  } = this
     let [sx, sy, sw, sh] = []
 
     sw = styleW
@@ -198,7 +206,7 @@ class ImgMode {
     sx = width - styleW
     sy = height - styleH
 
-    return { sx, sy, swidth:sw, sheight:sh, x: 0, y: 0, width:styleW, height:styleH}
+    return { sx, sy, swidth:sw, sheight:sh, x: 0, y: 0, width:styleW, height:styleH }
   }
 }
 
