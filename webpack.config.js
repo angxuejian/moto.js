@@ -1,18 +1,34 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserJsPlugin = require("terser-webpack-plugin")
+
+const resolve = file => {
+  return path.resolve(__dirname, file)
+}
+
 module.exports = {
   // mode: 'production',
-  mode: 'development',
+  // mode: 'development',
   entry: ['./src/index.js'],
 
+  // node版本需要 >= v12.13.0
+  devServer: {
+    static: {
+      directory: resolve('public')
+    },
+    compress: true,
+    port: 1548
+  },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Moto.js - sdk',
+      template: resolve('public/index.html'),
       scriptLoading: 'blocking'
     }),
-    
   ],
+
   module: {
     rules: [
       { // 将es6转为es5语法
@@ -44,7 +60,7 @@ module.exports = {
   },
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: resolve('dist'),
     clean: true, // 清空dist目录
   },
 };
