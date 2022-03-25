@@ -3,6 +3,7 @@ JavaScript - SDK
 
 ## 导航
 
+- [公共方法](docs/utils//README.md)
 - [类型方法](docs/types/README.md)
 - [日期方法](docs/moate/README.md)
 - [日历方法](docs/calendar/README.md)
