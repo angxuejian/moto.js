@@ -1,5 +1,11 @@
 # 颜色转换方法
 
+## Color对象
+Color 对象用于处理颜色代码转换。
+```javascript
+const colo = new Color()
+```
+
 方法 | 说明
 ---  | ---
 [hsv_to_rgb](./hsv_to_rgb.md) | HSV 转 RGB
