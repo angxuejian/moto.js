@@ -1,4 +1,4 @@
-# rgbToHex(r, g, b)
+# rgb_to_hex(r, g, b)
 将RGB颜色 转为 HEX颜色
 
 ## 参数
@@ -17,7 +17,8 @@ string | hex颜色
 
 ## 示例代码
 ```javascript
-const hex = rgbToHex(126,207,112)
+const colo = new Color()
+const hex = colo.rgb_to_hex(126,207,112)
 
 console.log(hex) // #7ECF70
 ```

@@ -1,4 +1,4 @@
-# rgbToHsv(r,g,b)
+# rgb_to_hsv(r,g,b)
 将RGB颜色 转为 HSV颜色
 
 ## 参数
@@ -24,7 +24,8 @@ v | number | 明度(0 - 100)
 
 ## 示例代码
 ```javascript
-const hsv = rgbToHsv(127, 207, 112)
+const colo = new Color()
+const hsv = colo.rgb_to_hsv(127, 207, 112)
 
 console.log(hsv) // {h: 111, s: 46, v: 81}
 ```
