@@ -11,16 +11,18 @@ object | 日期
 ### object属性
 属性 | 类型   |  说明
 --- | ---   | ---
-date | string | 以 "-" 拼接的日期
-year | number | 年
-month| number | 月
-day  | number | 日
-date_lunar | string | 阴历日期
-year_lunar | string | 阴历年
-month_lunar | string | 阴历月
-day_lunar | string | 阴历日
+value | string | 以 "-" 拼接的日期
 timestamp| number | 时间戳
-festival | array | 节日信息
+solar.year | number | 阳历年
+solar.month| number | 阳历月
+solar.day  | number | 阳历日
+solar.festival | array | 阳历节日信息
+solar.value | string | 阳历日期
+lunar.year | number | 阴历年
+lunar.month| number | 阴历月
+lunar.day  | number | 阴历日
+lunar.festival | array | 阴历节日信息
+lunar.value | string | 阴历日期
 
 ## 示例代码
 ```javascript

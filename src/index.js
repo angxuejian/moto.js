@@ -1,4 +1,4 @@
-import Calendar from './SDK/calendar/main'
+import Calendar from './SDK/calendar/index'
 import Moate from './SDK/moate'
 import ImgMode from './SDK/imgMode'
 import * as formatString from './SDK/formatString'
@@ -11,18 +11,19 @@ for (const key in _FUNCTIONS) window[key] = _FUNCTIONS[key]
 
 // -------------------
 // 测试是否已挂载到页面上
-// console.log(window, '--->')
+console.log(window, '--->')
 // const moate = new Moate()
-// const calen = new Calendar()
+const calen = new Calendar()
+
 // const imode = new ImgMode(960, 600, 167, 240)
 // console.log('今年第' + moate.getWeekNumber() + '周')
 // console.log('类型是否为string: ', isTypeOf([], 'string'))
 // console.log('moScrollbar: ', toUpperCaseH('moScrollbar'))
-// console.log('本月的日历周日开始:', calen.getMonth())
-// console.log('本月的日历周一开始:', calen.getMonth(1))
-// console.log('本周的日历周日开始:', calen.getWeek())
-// console.log('本周的日历周一开始:', calen.getWeek(1))
-// console.log('本日的日历信息:', calen.getDay())
+console.log('本月的日历周日开始:', calen.getMonth())
+// console.log('本月的日历周一开始:', calen.getMonth())
+console.log('本周的日历周日开始:', calen.getWeek())
+// console.log('本周的日历周一开始:', calen.getWeek())
+console.log('本日的日历信息:', calen.getDay())
 // console.log('rgb转hsv:', rgbToHsv(127, 207, 112))
 // console.log('hsv转rgb:', hsvToRgb(111, 46, 81))
 // console.log('rgb转hex:', rgbToHex(126,207,112))

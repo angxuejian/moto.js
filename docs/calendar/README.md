@@ -12,6 +12,7 @@ const moate = new Calendar()
 参数   | 类型   | 默认值 | 必填| 说明
 ---    | ---   | ---    | --- | ---
 d   | date | 今天     | 否  | 可以被 new Date对象解析的时间
+base | number | 0 | 否 | (0 or 1) 0：周日开始；1：周一开始
 
 ### Moate对象方法
 方法 | 说明
