@@ -63,18 +63,20 @@ class Moate {
    * @returns { lastMonth, nextMonth } 上月月份 和 下月月份
    */
   getAdjacentMonths() {
-    const last = new Date(this.d)
-    const next = new Date(this.d)
+    const curr = new Date(this.d)
+    const year = curr.getFullYear()
+    const month= curr.getMonth()
+    
+    const getMonthNumber = (i) => {
+      let  n = new Date(`${year}-${month === 0 ? '01' : month}-01`)
 
-    last.setMonth(last.getMonth() - 1)
-    last.setDate(1)
-
-    next.setMonth(next.getMonth() + 1)
-    next.setDate(1)
-
+      if (i === '-1') n.setMonth(month - 1) 
+      else n.setMonth(month + 1)
+      return [n.getFullYear(), n.getMonth() + 1, n.getDate()].join('-')
+    }
     return {
-      lastMonth: this.getFormat(last),
-      nextMonth: this.getFormat(next)
+      lastMonth: getMonthNumber('-1'),
+      nextMonth: getMonthNumber('+1')
     }
   }
 
